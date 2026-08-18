@@ -38,3 +38,39 @@ func NewArticle(headline string) Article {
 		Headline: headline,
 	}
 }
+
+func NewPersonAuthor(name string) Author {
+	return Author{
+		Typed: Typed{
+			Type: "Person",
+		},
+		Name: name,
+	}
+}
+
+func NewOrganisationAuthor(name string) Author {
+	return Author{
+		Typed: Typed{
+			Type: "Organization",
+		},
+		Name: name,
+	}
+}
+
+func NewPublisher(name string) Publisher {
+	return Publisher{
+		Typed: Typed{
+			Type: "Organization",
+		},
+		Name: name,
+	}
+}
+
+func NewImageObject(url string) ImageObject {
+	return ImageObject{
+		Typed: Typed{
+			Type: "ImageObject",
+		},
+		URL: url,
+	}
+}
