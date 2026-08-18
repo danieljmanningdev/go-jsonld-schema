@@ -13,13 +13,6 @@ type Person struct {
 	WorksFor       *Organisation   `json:"worksFor,omitempty"`
 }
 
-type Organisation struct {
-	Typed
-
-	Name string `json:"name"`
-	URL  string `json:"url,omitempty"`
-}
-
 func NewPerson(name string) Person {
 	return Person{
 		Root: Root{
