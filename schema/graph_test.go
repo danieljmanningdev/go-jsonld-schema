@@ -8,14 +8,22 @@ import (
 )
 
 func TestGraphMarshalUsesSingleContext(t *testing.T) {
+	const baseURL = "https://example.com"
+
 	website := schema.NewWebsite(
 		"Example",
-		"https://example.com",
+		baseURL,
+		schema.WithID(
+			schema.WebsiteID(baseURL),
+		),
 	)
-	website.ID = schema.WebsiteID(website.URL)
 
-	person := schema.NewPerson("Daniel Manning")
-	person.ID = schema.PersonID(website.URL)
+	person := schema.NewPerson(
+		"Daniel Manning",
+		schema.WithID(
+			schema.PersonID(baseURL),
+		),
+	)
 
 	graph := schema.NewGraph(
 		website,

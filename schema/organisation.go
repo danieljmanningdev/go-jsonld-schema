@@ -8,11 +8,16 @@ type Organisation struct {
 	Logo string `json:"logo,omitempty"`
 }
 
-func NewOrganisation(name, url string) Organisation {
+func NewOrganisation(
+	name string,
+	url string,
+	options ...NodeOption,
+) Organisation {
 	return Organisation{
-		Node: Node{
-			Type: "Organization",
-		},
+		Node: newNode(
+			"Organization",
+			options...,
+		),
 		Name: name,
 		URL:  url,
 	}

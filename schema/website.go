@@ -16,11 +16,16 @@ type SearchAction struct {
 	QueryInput string `json:"query-input"`
 }
 
-func NewWebsite(name, url string) WebSite {
+func NewWebsite(
+	name string,
+	url string,
+	options ...NodeOption,
+) WebSite {
 	return WebSite{
-		Node: Node{
-			Type: "WebSite",
-		},
+		Node: newNode(
+			"WebSite",
+			options...,
+		),
 		Name: name,
 		URL:  url,
 	}

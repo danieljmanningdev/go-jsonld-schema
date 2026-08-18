@@ -14,20 +14,30 @@ type ListItem struct {
 	Item     string `json:"item"`
 }
 
-func NewBreadcrumbList(items []ListItem) BreadcrumbList {
+func NewBreadcrumbList(
+	items []ListItem,
+	options ...NodeOption,
+) BreadcrumbList {
 	return BreadcrumbList{
-		Node: Node{
-			Type: "BreadcrumbList",
-		},
+		Node: newNode(
+			"BreadcrumbList",
+			options...,
+		),
 		ItemListElement: items,
 	}
 }
 
-func NewListItem(position int, name, item string) ListItem {
+func NewListItem(
+	position int,
+	name string,
+	item string,
+	options ...NodeOption,
+) ListItem {
 	return ListItem{
-		Node: Node{
-			Type: "ListItem",
-		},
+		Node: newNode(
+			"ListItem",
+			options...,
+		),
 		Position: position,
 		Name:     name,
 		Item:     item,

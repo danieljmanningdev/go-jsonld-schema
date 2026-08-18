@@ -13,11 +13,15 @@ type Person struct {
 	WorksFor       *Organisation   `json:"worksFor,omitempty"`
 }
 
-func NewPerson(name string) Person {
+func NewPerson(
+	name string,
+	options ...NodeOption,
+) Person {
 	return Person{
-		Node: Node{
-			Type: "Person",
-		},
+		Node: newNode(
+			"Person",
+			options...,
+		),
 		Name: name,
 	}
 }

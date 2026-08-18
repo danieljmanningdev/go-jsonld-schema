@@ -29,47 +29,67 @@ type ImageObject struct {
 	URL string `json:"url"`
 }
 
-func NewArticle(headline string) Article {
+func NewArticle(
+	headline string,
+	options ...NodeOption,
+) Article {
 	return Article{
-		Node: Node{
-			Type: "Article",
-		},
+		Node: newNode(
+			"Article",
+			options...,
+		),
 		Headline: headline,
 	}
 }
 
-func NewPersonAuthor(name string) Author {
+func NewPersonAuthor(
+	name string,
+	options ...NodeOption,
+) Author {
 	return Author{
-		Node: Node{
-			Type: "Person",
-		},
+		Node: newNode(
+			"Person",
+			options...,
+		),
 		Name: name,
 	}
 }
 
-func NewOrganisationAuthor(name string) Author {
+func NewOrganisationAuthor(
+	name string,
+	options ...NodeOption,
+) Author {
 	return Author{
-		Node: Node{
-			Type: "Organization",
-		},
+		Node: newNode(
+			"Organization",
+			options...,
+		),
 		Name: name,
 	}
 }
 
-func NewPublisher(name string) Publisher {
+func NewPublisher(
+	name string,
+	options ...NodeOption,
+) Publisher {
 	return Publisher{
-		Node: Node{
-			Type: "Organization",
-		},
+		Node: newNode(
+			"Organization",
+			options...,
+		),
 		Name: name,
 	}
 }
 
-func NewImageObject(url string) ImageObject {
+func NewImageObject(
+	url string,
+	options ...NodeOption,
+) ImageObject {
 	return ImageObject{
-		Node: Node{
-			Type: "ImageObject",
-		},
+		Node: newNode(
+			"ImageObject",
+			options...,
+		),
 		URL: url,
 	}
 }
