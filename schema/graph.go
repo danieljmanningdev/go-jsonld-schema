@@ -7,7 +7,7 @@ type Graph struct {
 
 func NewGraph(nodes ...any) Graph {
 	return Graph{
-		Context: "https://schema.org",
+		Context: SchemaOrgContext,
 		Graph:   nodes,
 	}
 }
