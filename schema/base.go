@@ -5,6 +5,6 @@ type Typed struct {
 }
 
 type Root struct {
-	Context string `json:"@context"`
+	Context string `json:"@context,omitempty"`
 	Type    string `json:"@type"`
 }
