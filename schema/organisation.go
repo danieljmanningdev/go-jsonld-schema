@@ -1,10 +1,8 @@
 package schema
 
 type Organisation struct {
-	Node
+	Thing
 
-	Name string `json:"name"`
-	URL  string `json:"url,omitempty"`
 	Logo string `json:"logo,omitempty"`
 }
 
@@ -14,11 +12,13 @@ func NewOrganisation(
 	options ...NodeOption,
 ) Organisation {
 	return Organisation{
-		Node: newNode(
-			"Organization",
-			options...,
-		),
-		Name: name,
-		URL:  url,
+		Thing: Thing{
+			Node: newNode(
+				TypeOrganization,
+				options...,
+			),
+			Name: name,
+			URL:  url,
+		},
 	}
 }
