@@ -1,7 +1,7 @@
 package schema
 
 type Article struct {
-	Root
+	Node
 
 	Headline      string     `json:"headline"`
 	Image         string     `json:"image,omitempty"`
@@ -11,27 +11,27 @@ type Article struct {
 }
 
 type Author struct {
-	Typed
+	Node
 
 	Name string `json:"name"`
 }
 
 type Publisher struct {
-	Typed
+	Node
 
 	Name string       `json:"name"`
 	Logo *ImageObject `json:"logo,omitempty"`
 }
 
 type ImageObject struct {
-	Typed
+	Node
 
 	URL string `json:"url"`
 }
 
 func NewArticle(headline string) Article {
 	return Article{
-		Root: Root{
+		Node: Node{
 			Type: "Article",
 		},
 		Headline: headline,
@@ -40,7 +40,7 @@ func NewArticle(headline string) Article {
 
 func NewPersonAuthor(name string) Author {
 	return Author{
-		Typed: Typed{
+		Node: Node{
 			Type: "Person",
 		},
 		Name: name,
@@ -49,7 +49,7 @@ func NewPersonAuthor(name string) Author {
 
 func NewOrganisationAuthor(name string) Author {
 	return Author{
-		Typed: Typed{
+		Node: Node{
 			Type: "Organization",
 		},
 		Name: name,
@@ -58,7 +58,7 @@ func NewOrganisationAuthor(name string) Author {
 
 func NewPublisher(name string) Publisher {
 	return Publisher{
-		Typed: Typed{
+		Node: Node{
 			Type: "Organization",
 		},
 		Name: name,
@@ -67,7 +67,7 @@ func NewPublisher(name string) Publisher {
 
 func NewImageObject(url string) ImageObject {
 	return ImageObject{
-		Typed: Typed{
+		Node: Node{
 			Type: "ImageObject",
 		},
 		URL: url,

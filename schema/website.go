@@ -1,7 +1,7 @@
 package schema
 
 type WebSite struct {
-	Root
+	Node
 
 	Name string `json:"name"`
 	URL  string `json:"url"`
@@ -10,7 +10,7 @@ type WebSite struct {
 }
 
 type SearchAction struct {
-	Typed
+	Node
 
 	Target     string `json:"target"`
 	QueryInput string `json:"query-input"`
@@ -18,7 +18,7 @@ type SearchAction struct {
 
 func NewWebsite(name, url string) WebSite {
 	return WebSite{
-		Root: Root{
+		Node: Node{
 			Type: "WebSite",
 		},
 		Name: name,

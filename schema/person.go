@@ -3,7 +3,7 @@ package schema
 type SocialProfile string
 
 type Person struct {
-	Root
+	Node
 
 	Name           string          `json:"name"`
 	URL            string          `json:"url,omitempty"`
@@ -15,7 +15,7 @@ type Person struct {
 
 func NewPerson(name string) Person {
 	return Person{
-		Root: Root{
+		Node: Node{
 			Type: "Person",
 		},
 		Name: name,

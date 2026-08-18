@@ -1,7 +1,7 @@
 package schema
 
 type Organisation struct {
-	Root
+	Node
 
 	Name string `json:"name"`
 	URL  string `json:"url,omitempty"`
@@ -10,7 +10,7 @@ type Organisation struct {
 
 func NewOrganisation(name, url string) Organisation {
 	return Organisation{
-		Root: Root{
+		Node: Node{
 			Type: "Organization",
 		},
 		Name: name,

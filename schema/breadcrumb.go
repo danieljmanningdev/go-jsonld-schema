@@ -1,13 +1,13 @@
 package schema
 
 type BreadcrumbList struct {
-	Root
+	Node
 
 	ItemListElement []ListItem `json:"itemListElement"`
 }
 
 type ListItem struct {
-	Typed
+	Node
 
 	Position int    `json:"position"`
 	Name     string `json:"name"`
@@ -16,7 +16,7 @@ type ListItem struct {
 
 func NewBreadcrumbList(items []ListItem) BreadcrumbList {
 	return BreadcrumbList{
-		Root: Root{
+		Node: Node{
 			Type: "BreadcrumbList",
 		},
 		ItemListElement: items,
@@ -25,7 +25,7 @@ func NewBreadcrumbList(items []ListItem) BreadcrumbList {
 
 func NewListItem(position int, name, item string) ListItem {
 	return ListItem{
-		Typed: Typed{
+		Node: Node{
 			Type: "ListItem",
 		},
 		Position: position,
