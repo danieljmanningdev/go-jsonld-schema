@@ -6,9 +6,10 @@ import (
 )
 
 const (
-	websiteIDFragment = "website"
-	personIDFragment  = "person"
-	pageIDFragment    = "webpage"
+	websiteIDFragment      = "website"
+	personIDFragment       = "person"
+	pageIDFragment         = "webpage"
+	organisationIDFragment = "organization"
 )
 
 func WebsiteID(base string) string {
@@ -45,4 +46,8 @@ func buildID(rawURL, fragment string) string {
 	parsedURL.Fragment = fragment
 
 	return parsedURL.String()
+}
+
+func OrganisationID(base string) string {
+	return buildID(base, organisationIDFragment)
 }

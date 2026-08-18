@@ -61,6 +61,12 @@ func TestIDHelpers(t *testing.T) {
 			input: "https://example.com",
 			want:  "https://example.com/#webpage",
 		},
+		{
+			name:  "organisation ID",
+			build: schema.OrganisationID,
+			input: "https://example.com/",
+			want:  "https://example.com/#organization",
+		},
 	}
 
 	for _, test := range tests {

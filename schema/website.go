@@ -6,6 +6,7 @@ type WebSite struct {
 	Name string `json:"name"`
 	URL  string `json:"url"`
 
+	Publisher       *Reference    `json:"publisher,omitempty"`
 	PotentialAction *SearchAction `json:"potentialAction,omitempty"`
 }
 
