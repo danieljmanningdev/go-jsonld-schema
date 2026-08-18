@@ -23,3 +23,14 @@ func NewBreadcrumbList(items []ListItem) BreadcrumbList {
 		ItemListElement: items,
 	}
 }
+
+func NewListItem(position int, name, item string) ListItem {
+	return ListItem{
+		Typed: Typed{
+			Type: "ListItem",
+		},
+		Position: position,
+		Name:     name,
+		Item:     item,
+	}
+}
