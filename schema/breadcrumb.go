@@ -17,8 +17,7 @@ type ListItem struct {
 func NewBreadcrumbList(items []ListItem) BreadcrumbList {
 	return BreadcrumbList{
 		Root: Root{
-			Context: "https://schema.org/",
-			Type:    "BreadcrumbList",
+			Type: "BreadcrumbList",
 		},
 		ItemListElement: items,
 	}

@@ -19,8 +19,7 @@ type SearchAction struct {
 func NewWebsite(name, url string) WebSite {
 	return WebSite{
 		Root: Root{
-			Context: "https://schema.org",
-			Type:    "WebSite",
+			Type: "WebSite",
 		},
 		Name: name,
 		URL:  url,

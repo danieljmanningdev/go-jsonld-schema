@@ -11,8 +11,7 @@ type Organisation struct {
 func NewOrganisation(name, url string) Organisation {
 	return Organisation{
 		Root: Root{
-			Context: "https://schema.org",
-			Type:    "Organization",
+			Type: "Organization",
 		},
 		Name: name,
 		URL:  url,

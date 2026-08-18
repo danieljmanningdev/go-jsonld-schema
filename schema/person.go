@@ -16,8 +16,7 @@ type Person struct {
 func NewPerson(name string) Person {
 	return Person{
 		Root: Root{
-			Context: "https://schema.org/",
-			Type:    "Person",
+			Type: "Person",
 		},
 		Name: name,
 	}

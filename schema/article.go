@@ -32,8 +32,7 @@ type ImageObject struct {
 func NewArticle(headline string) Article {
 	return Article{
 		Root: Root{
-			Context: "https://schema.org",
-			Type:    "Article",
+			Type: "Article",
 		},
 		Headline: headline,
 	}
