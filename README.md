@@ -1,5 +1,7 @@
 # go-jsonld-schema
 
+[![CI](https://github.com/danieljmanningdev/go-jsonld-schema/actions/workflows/ci.yml/badge.svg)](https://github.com/danieljmanningdev/go-jsonld-schema/actions/workflows/ci.yml)
+
 `go-jsonld-schema` is a lightweight Go package for building and
 marshaling Schema.org JSON-LD structured data.
 
