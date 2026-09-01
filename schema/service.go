@@ -3,27 +3,27 @@ package schema
 type Service struct {
 	Thing
 
-	ServiceType string          `json:"serviceType,omitempty"`
-	Provider    *Organisation   `json:"provider,omitempty"`
-	AreaServed  []string        `json:"areaServed,omitempty"`
-	Offers      []Offer         `json:"offers,omitempty"`
+	ServiceType string        `json:"serviceType,omitempty"`
+	Provider    *Organisation `json:"provider,omitempty"`
+	AreaServed  []string      `json:"areaServed,omitempty"`
+	Offers      []Offer       `json:"offers,omitempty"`
 }
 
 type ProfessionalService struct {
 	Thing
 
-	Image       string   `json:"image,omitempty"`
-	Telephone   string   `json:"telephone,omitempty"`
-	PriceRange  string   `json:"priceRange,omitempty"`
-	AreaServed  []string `json:"areaServed,omitempty"`
-	SameAs      []string `json:"sameAs,omitempty"`
+	Image      string   `json:"image,omitempty"`
+	Telephone  string   `json:"telephone,omitempty"`
+	PriceRange string   `json:"priceRange,omitempty"`
+	AreaServed []string `json:"areaServed,omitempty"`
+	SameAs     []string `json:"sameAs,omitempty"`
 }
 
 type Offer struct {
 	Node
 
-	URL          string `json:"url,omitempty"`
-	Price        string `json:"price,omitempty"`
+	URL           string `json:"url,omitempty"`
+	Price         string `json:"price,omitempty"`
 	PriceCurrency string `json:"priceCurrency,omitempty"`
 }
 
