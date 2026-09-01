@@ -2,43 +2,43 @@
 
 [![CI](https://github.com/danieljmanningdev/go-jsonld-schema/actions/workflows/ci.yml/badge.svg)](https://github.com/danieljmanningdev/go-jsonld-schema/actions/workflows/ci.yml)
 
-`go-jsonld-schema` is a lightweight Go package for building and
-marshaling Schema.org JSON-LD structured data.
+`go-jsonld-schema` is a lightweight Go package for building and marshaling Schema.org JSON-LD structured data.
 
-It provides typed Go structs and constructors for common structured data
-types so JSON-LD can be generated with Go instead of manually writing
-JSON inside HTML templates.
+It provides typed Go structs and constructors for common structured-data types so JSON-LD can be generated with Go instead of manually writing JSON inside HTML templates.
 
 ## Supported Schemas
 
 Currently supported:
 
--   WebSite
--   Person
--   Organization
--   Article
--   BreadcrumbList
--   SearchAction
--   ImageObject
--   ListItem
+- WebSite
+- Person
+- Organization
+- ProfessionalService
+- Service
+- Offer
+- Article
+- BreadcrumbList
+- SearchAction
+- ImageObject
+- ListItem
+- Graph
+- Reference helpers
 
 ## Installation
 
-``` bash
+```bash
 go get github.com/danieljmanningdev/go-jsonld-schema
 ```
 
 Import the schema package:
 
-``` go
+```go
 import "github.com/danieljmanningdev/go-jsonld-schema/schema"
 ```
 
 ## WebSite
 
-Create a basic WebSite schema:
-
-``` go
+```go
 site := schema.NewWebsite(
     "Example Site",
     "https://example.com",
@@ -48,13 +48,11 @@ data, err := schema.MarshalIndent(site)
 if err != nil {
     log.Fatal(err)
 }
-
-fmt.Println(string(data))
 ```
 
-Output:
+`schema.Marshal` and `schema.MarshalIndent` automatically add the root JSON-LD context when it is not already present:
 
-``` json
+```json
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -63,199 +61,155 @@ Output:
 }
 ```
 
-### WebSite with SearchAction
-
-``` go
-site := schema.NewWebsite(
-    "Example Site",
-    "https://example.com",
-)
-
-site.PotentialAction = &schema.SearchAction{
-    Typed: schema.Typed{
-        Type: "SearchAction",
-    },
-    Target:     "https://example.com/search?q={search_term_string}",
-    QueryInput: "required name=search_term_string",
-}
-```
-
 ## Person
 
-``` go
+```go
 person := schema.NewPerson("Daniel Manning")
-
 person.URL = "https://example.com"
 person.PictureURL = "https://example.com/profile.jpg"
 person.JobTitle = "Digital Product Designer & Engineer"
-
 person.SocialProfiles = []schema.SocialProfile{
     "https://github.com/example",
-    "https://linkedin.com/in/example",
 }
 ```
 
 ## Organization
 
-The Go API uses the British spelling `Organisation`, while the generated
-Schema.org `@type` is `Organization`.
+The Go API uses the British spelling `Organisation`, while the generated Schema.org `@type` is `Organization`.
 
-``` go
+```go
 organisation := schema.NewOrganisation(
     "Example Ltd",
     "https://example.com",
 )
-
 organisation.Logo = "https://example.com/logo.png"
 ```
 
-## Person with Organization
+## Service
 
-``` go
-person := schema.NewPerson("Daniel Manning")
-
-organisation := schema.Organisation{
-    Root: schema.Root{
-        Type: "Organization",
-    },
-    Name: "Example Ltd",
-    URL:  "https://example.com",
-}
-
-person.WorksFor = &organisation
+```go
+service := schema.NewService(
+    "Web Development",
+    schema.WithID("https://example.com/#web-development"),
+)
+service.URL = "https://example.com/web-development/"
+service.Description = "Custom web development services."
+service.ServiceType = "Web development"
+service.AreaServed = []string{"United Kingdom"}
 ```
+
+## ProfessionalService
+
+```go
+business := schema.NewProfessionalService("Example Studio")
+business.URL = "https://example.com"
+business.Image = "https://example.com/logo.png"
+business.AreaServed = []string{"Leeds", "United Kingdom"}
+business.PriceRange = "££"
+```
+
+## Offer
+
+```go
+offer := schema.NewOffer()
+offer.URL = "https://example.com/services/web-development"
+offer.Price = "1500"
+offer.PriceCurrency = "GBP"
+```
+
+Offers can be attached to a `Service` through its `Offers` field.
 
 ## BreadcrumbList
 
-``` go
+```go
 breadcrumbs := schema.NewBreadcrumbList([]schema.ListItem{
-    schema.NewListItem(
-        1,
-        "Home",
-        "https://example.com/",
-    ),
-    schema.NewListItem(
-        2,
-        "Blog",
-        "https://example.com/blog",
-    ),
-    schema.NewListItem(
-        3,
-        "Article",
-        "https://example.com/blog/article",
-    ),
+    schema.NewListItem(1, "Home", "https://example.com/"),
+    schema.NewListItem(2, "Blog", "https://example.com/blog"),
+    schema.NewListItem(3, "Article", "https://example.com/blog/article"),
 })
 ```
 
 ## Article
 
-``` go
+```go
 article := schema.NewArticle("How HTMX Works")
-
 author := schema.NewPersonAuthor("Daniel Manning")
 publisher := schema.NewPublisher("Example Ltd")
 logo := schema.NewImageObject("https://example.com/logo.png")
 
 publisher.Logo = &logo
-
 article.Author = &author
 article.Publisher = &publisher
 article.Image = "https://example.com/article.jpg"
 article.DatePublished = "2026-08-18"
 ```
 
-Organization authors are also supported:
+## Graph
 
-``` go
-author := schema.NewOrganisationAuthor("Example Ltd")
-article.Author = &author
+Use a graph when one page needs several related JSON-LD nodes:
+
+```go
+graph := schema.NewGraph(
+    person,
+    site,
+    breadcrumbs,
+)
+
+data, err := schema.Marshal(graph)
 ```
+
+## IDs and References
+
+Nodes can be given stable `@id` values with `schema.WithID(...)`. Use the reference helpers when one node should point at another existing node rather than embedding the whole object repeatedly.
 
 ## Marshaling
 
-The package provides standard and indented JSON marshaling helpers.
+Compact JSON:
 
-### Compact JSON
-
-``` go
+```go
 data, err := schema.Marshal(site)
-if err != nil {
-    log.Fatal(err)
-}
 ```
 
-### Indented JSON
+Indented JSON:
 
-``` go
+```go
 data, err := schema.MarshalIndent(site)
-if err != nil {
-    log.Fatal(err)
-}
 ```
+
+Both helpers require the root value to marshal to a JSON object and ensure `@context` is present.
 
 ## Using with Go HTML Templates
 
-The generated JSON can be passed into a Go HTML template and rendered
-inside a JSON-LD script element.
+Generate JSON through the package first, then pass the resulting bytes/string to your template. Do not construct JSON-LD by concatenating untrusted strings.
 
-For applications using `html/template`, take care to integrate generated
-JSON using an appropriate trusted template type only after the data has
-been produced by `encoding/json`. Do not build JSON-LD by concatenating
-untrusted strings manually.
-
-Example template:
-
-``` html
-{{ with .JSONLD }}
-<script type="application/ld+json">{{ . }}</script>
-{{ end }}
+```html
+{{with .JSONLD}}
+<script type="application/ld+json">{{.}}</script>
+{{end}}
 ```
+
+When using `html/template`, only convert generated JSON to a trusted template type after it has been serialized safely.
 
 ## Development
 
-Format, vet and test the package with:
-
-``` bash
+```bash
 gofmt -w .
 go vet ./...
 go test ./...
 ```
 
-## Project Structure
-
-``` text
-.
-├── go.mod
-├── LICENSE
-├── README.md
-└── schema
-    ├── article.go
-    ├── base.go
-    ├── breadcrumb.go
-    ├── organisation.go
-    ├── person.go
-    ├── schema.go
-    ├── schema_test.go
-    └── website.go
-```
-
 ## Goals
 
-The project aims to:
-
--   Provide a small, idiomatic Go API for common Schema.org JSON-LD
-    types.
--   Reduce manually written JSON-LD in Go web applications.
--   Use Go's `encoding/json` package for serialization.
--   Make common structured-data objects easy to compose.
--   Keep the package lightweight and dependency-free.
--   Make invalid or inconsistent schema values harder to introduce
-    through constructors.
+- Provide a small, idiomatic Go API for common Schema.org JSON-LD types.
+- Reduce manually written JSON-LD in Go applications.
+- Use Go's `encoding/json` package for serialization.
+- Make common structured-data objects easy to compose.
+- Keep the package lightweight and dependency-free.
+- Make invalid or inconsistent schema values harder to introduce through constructors.
 
 ## Status
 
-The package is currently under active development. The public API may
-change while additional schema types, validation and tests are added.
+The package is under active development. The public API may still evolve as additional Schema.org types and validation helpers are added.
 
 ## License
 
